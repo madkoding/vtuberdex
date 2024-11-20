@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Cambia "main" por tu rama principal si es diferente
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clonar el repositorio
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Ajusta la versión de Node.js si es necesario
+
+      # Instalar dependencias
+      - name: Install Dependencies
+        run: npm install
+
+      # Ejecutar el generador
+      - name: Run Generator
+        run: npm run build
+
+      # Copiar los archivos generados a la carpeta "public"
+      - name: Move Generated Files
+        run: mv generated/* public/
+
+      # Configurar GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
