@@ -28,10 +28,6 @@ jobs:
       - name: Run Generator
         run: npm run build
 
-      # Copiar los archivos generados a la carpeta "public"
-      - name: Move Generated Files
-        run: mv generated/* public/
-
       # Configurar GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
